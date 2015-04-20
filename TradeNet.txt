@@ -1,0 +1,31 @@
+===Database TradeNet
+
+== Table structure for table Customers
+
+|------
+|Column|Type|Null|Default
+|------
+|//**ID**//|int(10)|No|
+|Name|varchar(50)|No|
+|Address|varchar(100)|No|
+|Balance|varchar(100)|No|
+|Profit_And_Loss|varchar(100)|No|
+== Table structure for table Portfolio
+
+|------
+|Column|Type|Null|Default
+|------
+|Customer|int(10)|No|
+|Stock|varchar(10)|No|
+|Shares|varchar(100)|No|
+|Price|varchar(10)|No|
+== Table structure for table Transactions
+
+|------
+|Column|Type|Null|Default
+|------
+|//**ID**//|int(10)|No|
+|Customer|int(10)|No|
+|Stock|varchar(10)|No|
+|Number|varchar(100)|No|
+|Time|int(20)|No|
