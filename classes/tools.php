@@ -11,6 +11,7 @@ define('L_LANG', 'en_US');
 function sec_session_start()
 {
     $session_name = 'TradeNet';   // Set a custom session name
+    //False if testing; Otherwise True
     $secure = false;
     // This stops JavaScript being able to access the session id.
     $httponly = true;
@@ -20,8 +21,9 @@ function sec_session_start()
         exit();
     }
     // Gets current cookies params.
+    $cookieTime = 86400;
     $cookieParams = session_get_cookie_params();
-    session_set_cookie_params($cookieParams['lifetime'],
+    session_set_cookie_params($cookieTime,
         $cookieParams['path'],
         $cookieParams['domain'],
         $secure,
@@ -31,6 +33,7 @@ function sec_session_start()
     if (!isset($_SESSION)) {
         session_start(); // Start the PHP session
         session_regenerate_id(); // regenerated the session, delete the old one.
+        $_SESSION['session_cookie_time'] = $cookieTime;
     }
 }
 
@@ -122,6 +125,55 @@ function check_brute($user_id, $mysqli)
         }
     }
     else {
+        return false;
+    }
+}
+
+function login_check($db)
+{
+    // Check if all session variables are set
+    if (isset($_SESSION['user_id'],
+        $_SESSION['username'],
+        $_SESSION['login_string'])
+    ) {
+        $user_id = $_SESSION['user_id'];
+        $login_string = $_SESSION['login_string'];
+
+        // Get the user-agent string of the user.
+        $user_browser = $_SERVER['HTTP_USER_AGENT'];
+
+        if ($stmt = $db->prepare("SELECT password
+                                      FROM Users
+                                      WHERE CustomerID = ? LIMIT 1")
+        ) {
+            // Bind "$user_id" to parameter.
+            $stmt->bind_param('i', $user_id);
+            $stmt->execute(); // Execute the prepared query.
+            $stmt->store_result();
+
+            if ($stmt->num_rows === 1) {
+                // If the user exists get variables from result.
+                $stmt->bind_result($password);
+                $stmt->fetch();
+                $login_check = hash('sha512', $password . $user_browser);
+
+                if ($login_check === $login_string) {
+                    // Logged In!!!!
+                    return true;
+                } else {
+                    // Not logged in
+                    return false;
+                }
+            } else {
+                // Not logged in
+                return false;
+            }
+        } else {
+            // Not logged in
+            return false;
+        }
+    } else {
+        // Not logged in
         return false;
     }
 }
