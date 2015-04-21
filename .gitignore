@@ -1,2 +1,8 @@
 
 *.pem
+
+.idea/.name
+
+*.xml
+
+*.iml
