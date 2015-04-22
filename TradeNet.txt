@@ -10,15 +10,61 @@
 |Address|varchar(100)|No|
 |Balance|varchar(100)|No|
 |Profit_And_Loss|varchar(100)|No|
+== Dumping data for table Customers
+
+|12345|Robin Williams|123 Main Street, Anywhere, CA 12345|1000.00|0
+== Table structure for table LoginAttempts
+
+|------
+|Column|Type|Null|Default
+|------
+|//**Attempt_Number**//|int(11)|No|
+|ID|int(11)|No|
+|Time|varchar(30)|No|
+|Success|tinyint(1)|No|
+|IP|varchar(100)|No|
+== Dumping data for table LoginAttempts
+
+|1|12345|1429645409|1|127.0.0.1
+|2|12345|1429645449|0|::1
+|3|12345|1429645476|0|::1
+|4|12345|1429645480|0|::1
+|12|12345|1429646835|1|::1
+|11|12345|1429646227|1|::1
+|10|12345|1429646148|0|::1
+|9|12345|1429645532|1|::1
+|13|12345|1429647025|1|130.18.79.24
+|14|12345|1429651331|1|::1
+|15|12345|1429652005|1|::1
+|16|12345|1429652061|1|24.53.165.23
+|17|12345|1429652182|1|24.53.165.23
+|18|12345|1429652254|0|24.53.165.23
+|19|12345|1429652286|1|24.53.165.23
+|20|12345|1429652335|1|::1
+|21|12345|1429652534|1|24.53.165.23
+|22|12345|1429652616|1|24.53.165.23
+|23|12345|1429652928|1|24.53.165.23
+|24|12345|1429653177|0|::1
+|25|12345|1429653183|1|::1
+|26|12345|1429653202|1|::1
+|27|12345|1429675305|1|24.53.165.23
+|28|12345|1429675327|1|24.53.165.23
+|29|12345|1429719810|0|24.53.165.23
+|30|12345|1429719819|1|24.53.165.23
+|31|12345|1429720673|1|::1
+|32|12345|1429720764|1|::1
+|33|12345|1429722261|1|127.0.0.1
 == Table structure for table Portfolio
 
 |------
 |Column|Type|Null|Default
 |------
-|Customer|int(10)|No|
+|//**Customer**//|int(10)|No|
 |Stock|varchar(10)|No|
 |Shares|varchar(100)|No|
 |Price|varchar(10)|No|
+== Dumping data for table Portfolio
+
 == Table structure for table Transactions
 
 |------
@@ -29,3 +75,18 @@
 |Stock|varchar(10)|No|
 |Number|varchar(100)|No|
 |Time|int(20)|No|
+== Dumping data for table Transactions
+
+== Table structure for table Users
+
+|------
+|Column|Type|Null|Default
+|------
+|//**CustomerID**//|int(5)|No|
+|Username|varchar(50)|No|
+|Password|varchar(128)|No|
+|Salt|varchar(128)|No|
+|Email|varchar(50)|No|
+== Dumping data for table Users
+
+|12345|RWilliams|dd42ce0aecdfa0e700d4209b8fa2e0b7ea38efb24dac2010f44ea56f2879752546acc871b4bd4d318fa0d1797c4696e66fae4deb9291cda0c19b8c5d65f24db5|bb493a4ca9db0bcc11d7e237c53a450169f4b5a6492e534c78faa73a5f53f7805e7e1ce1fc4894917a4123755d9f6cd4af59ce7e5808b49859fe0703588ac2f6|test@test.com
