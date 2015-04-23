@@ -1,56 +1,114 @@
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', '1');
+error_reporting(E_ALL | E_STRICT);
 
-//function stock_ticker ($symbols, $background_color, $stock_color, $price_color, $up_color, $down_color, $speed)
-//{
-//    sort($symbols);
-//
-//    if ($background_color==$stock_color) {
-//        // something's wrong, colors weren't specified
-//        $background_color = invert_color($background_color);
-//    }
-//
-//    $return = '<div align="center">
-//  <marquee bgcolor="#'.$background_color.'" loop="20" scrollamount="'.$speed.'">';
-//
-//    foreach ($symbols as $symbol) {
-//        $data = file_get_contents("http://quote.yahoo.com/d/quotes.csv?s=$symbol&f=sl1d1t1c1ohgv&e=.csv");
-//
-//        $values = explode(",", $data);
-//        $lasttrade = $values[1];
-//        $change = $values[4];
-//
-//        $return .= "<span style=\"color:#$stock_color\">$symbol</span> &nbsp;";
-//        $return .= "<span style=\"color:#$price_color\">$lasttrade</span> &nbsp;";
-//        if ($change<0)
-//            $return .= "<span style=\"color:#$down_color\">$change</span> &nbsp;";
-//        else
-//            $return .= "<span style=\"color:#$up_color\">$change</span> &nbsp;";
-//        $return .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-//    }
-//
-//    $return .= '</marque>
-//  </div>';
-//
-//    return $return;
-//}
-//
-//$stocks = array("AAPL", "T");
-//
-//$ticker = stock_ticker($stocks, 'dddddd', 'black', '0000bb', 'green', 'red', 6);
-//echo $ticker;
+include_once 'classes/tools.php';
 
+sec_session_start();
 
-$arr = array('AAPL','YHOO');
-$url= 'http://finance.yahoo.com/d/quotes.csv?s='.implode('+', $arr).'&f='.'snl1c1jkd1t1';
-echo '<table>';
-$handle = fopen($url, 'r');
-while (($data = fgetcsv($handle, 1000, ',')) !== FALSE)
-{
-    echo '<tr>';
-    foreach($data as $d)
-        echo "<td>$d</td>";
-    echo '</tr>';
-}
-fclose($handle);
-echo '</table>';
 ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>TradeNet | Customer Home</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
+    <meta name="viewport" content="width=960">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+<div id="header">
+    <div id="logo">
+        <h1>TradeNet</h1>
+    </div>
+</div>
+<div id="navigation">
+    <ul>
+        <li><a href="customerhome.php" class="first">Home</a></li>
+        <li><a href="viewstocks.php">View Stocks</a></li>
+        <li><a href="trade.php">Trade</a></li>
+        <li><a href="transfer.php">Transfer</a></li>
+        <!--                    <li><a href="#">Training</a></li>-->
+        <!--                    <li><a href="#">Support</a></li>-->
+        <li><a href="logout.php">Logout</a></li>
+    </ul>
+</div>
+<div id="content">
+    <div id="page">
+        <div id="column1">
+            <div class="container section-margins">
+                <div id=stock-tickers class="row" style="width: 90%; margin: 0 auto;">
+                    <?php
+
+                    $world = array('AAPL', 'GOOGL', 'T', 'FB', 'TWTR', 'RNST', 'BXS', 'COKE');
+                    $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . implode('+', $world) . '&f=' . 'snl1c1p2d1t1v';
+                    $handle = fopen($url, 'r');
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                    ?>
+                    <div class="span2 row-margin-small">
+                        <?php
+                        if (substr($data[4], 0, 1) == '-'){
+                        ?>
+                        <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                             style="background-color: #E74C3C;">
+                        <?php
+                        } else {
+                        ?>
+                        <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                             style="background-color: #2ECC71;">
+                        <?php
+                        }
+                        ?>
+                            <div id="stock-values-<?php echo $data[0] ?>">
+                                <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
+
+                                <div id="stock-delta-<?php echo $data[0] ?>"><?php echo $data[3] ?></div>
+                                <div
+                                    id="stock-perc-<?php echo $data[0] ?>"><?php echo '(' . $data[4] . ')' ?></div>
+
+                                <div>&nbsp;</div>
+
+                                <div id="stock-price-lt"><strong>Last Trade</strong></div>
+                                <div id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    fclose($handle);
+
+                    ?>
+
+                    </div>
+                </div>
+            </div>
+            <div id="column2">
+                <h2>World Markets</h2>
+                <ul>
+                    <?php
+
+                    $world = array('^IXIC', '^GSPC', 'EURUSD=X', 'GCM15.CMX', 'CLM15.NYM');
+                    $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . implode('+', $world) . '&f=' . 'snl1c1jkd1t1';
+                    $handle = fopen($url, 'r');
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        echo "<li><a href='http://finance.yahoo.com/q?s=$data[0]' target='_blank'>$data[1]  -  $$data[2]</a></li>";
+                    }
+                    fclose($handle);
+
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both;">&nbsp;</div>
+    </div>
+    <div id="footer">
+        <p>&copy;&nbsp;Copyright 2015. All Rights Reserved | Downs, Jones, Jozefiak, Richards, Turnipseed</p>
+    </div>
+</body>
+</html>

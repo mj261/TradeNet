@@ -62,17 +62,20 @@ if (login_check($db) === true) {
                 </div>
             </div>
             <div id="column2">
-                <h2>Latest News</h2>
+                <h2>World Markets</h2>
                 <ul>
-                    <li><a href="#">Aliquam libero</a></li>
-                    <li><a href="#">Consectetuer adipiscing elit</a></li>
-                    <li><a href="#">Metus aliquam pellentesque</a></li>
-                    <li><a href="#">Suspendisse iaculis mauris</a></li>
-                    <li><a href="#">Urnanet non molestie semper</a></li>
-                    <li><a href="#">Metus aliquam pellentesque</a></li>
-                    <li><a href="#">Suspendisse iaculis mauris</a></li>
-                    <li><a href="#">Suspendisse iaculis mauris</a></li>
-                    <li><a href="#">Proin gravida orci porttitor</a></li>
+                    <?php
+
+                    $world = array('^IXIC', '^GSPC', 'EURUSD=X', 'GCM15.CMX', 'CLM15.NYM');
+                    $url= 'http://finance.yahoo.com/d/quotes.csv?s='.implode('+', $world).'&f='.'snl1c1jkd1t1';
+                    $handle = fopen($url, 'r');
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE)
+                    {
+                        echo "<li><a href='http://finance.yahoo.com/q?s=$data[0]' target='_blank'>$data[1]  -  $$data[2]</a></li>";
+                    }
+                    fclose($handle);
+
+                    ?>
                 </ul>
             </div>
         </div>

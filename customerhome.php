@@ -18,6 +18,10 @@ if (login_check($db) === true) {
             <title>TradeNet | Customer Home</title>
             <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
             <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
+            <meta name="viewport" content="width=550">
+            <link href="css/bootstrap.css" rel="stylesheet">
+            <link href="css/flat-ui.css" rel="stylesheet">
+            <link href="css/app.css" rel="stylesheet">
         </head>
         <body>
             <div id="header">
@@ -39,48 +43,77 @@ if (login_check($db) === true) {
             <div id="content">
                 <div id="page">
                     <div id="column1">
-                        <div class="box1">
-                            <h2>Welcome to TradeNet </h2>
+                        <div class="container section-margins">
+                            <div id=stock-tickers class="row" style="width: 90%; margin: 0 auto;">
+                                <?php
 
-                            <p><strong><img src="css/images/image06.jpg" alt="" width="120" height="120" class="image-left"/>This
-                                    template </strong> is a free CSS web template. Thanks goes to <a href="#">Stock Exchange</a>
-                                for the free photo I used in this template. This design uses pure CSS and no tables for layout
-                                and is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/ph/">Creative
-                                    Commons Attribution-Share Alike 3.0 Philippines License</a>, which basically says that:</p>
+                                $customer = array('AAPL', 'GOOGL', 'T', 'FB', 'TWTR', 'RNST', 'BXS', 'COKE');
+                                $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . implode('+', $customer) . '&f=' . 'snl1c1p2d1t1v';
+                                $handle = fopen($url, 'r');
+                                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                                ?>
+                                <a href='http://finance.yahoo.com/q?s=<?php echo $data[0]?>' target='_blank'>
+                                <div class="span2 row-margin-small">
+                                    <?php
+                                    if (substr($data[4], 0, 1) == '-'){
+                                    ?>
+                                    <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                                         style="background-color: #E74C3C;">
+                                        <?php
+                                        } else {
+                                        ?>
+                                        <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                                             style="background-color: #2ECC71;">
+                                            <?php
+                                            }
+                                            ?>
+                                            <div id="stock-values-<?php echo $data[0] ?>">
+                                                <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                                <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
+
+                                                <div id="stock-delta-<?php echo $data[0] ?>"><?php echo $data[3] ?></div>
+                                                <div
+                                                    id="stock-perc-<?php echo $data[0] ?>"><?php echo '(' . $data[4] . ')' ?></div>
+
+                                                <div>&nbsp;</div>
+
+                                                <div id="stock-price-lt"><strong>Last Trade</strong></div>
+                                                <div id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] ?></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <?php
+                                    }
+                                    fclose($handle);
+
+                                    ?>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="column2">
+                            <h2>World Markets</h2>
                             <ul>
-                                <li>You <strong>CAN</strong> use this design for both personal or commercial purposes free of
-                                    charge.
-                                </li>
-                                <li>You <strong>CAN</strong> copy, distribute and transmit this template.</li>
-                                <li>You <strong>CAN</strong> modify this template however you want.</li>
+                                <?php
+
+                                $world = array('^IXIC', '^GSPC', 'EURUSD=X', 'GCM15.CMX', 'CLM15.NYM');
+                                $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . implode('+', $world) . '&f=' . 'snl1c1jkd1t1';
+                                $handle = fopen($url, 'r');
+                                while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                                    echo "<li><a href='http://finance.yahoo.com/q?s=$data[0]' target='_blank'>$data[1]  -  $$data[2]</a></li>";
+                                }
+                                fclose($handle);
+
+                                ?>
                             </ul>
-                            <p>Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam
-                                erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus,
-                                sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. Donec
-                                placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est.
-                                Curabitur sit amet nulla. Nam in massa. </p>
                         </div>
                     </div>
-                    <div id="column2">
-                        <h2>Latest News</h2>
-                        <ul>
-                            <li><a href="#">Aliquam libero</a></li>
-                            <li><a href="#">Consectetuer adipiscing elit</a></li>
-                            <li><a href="#">Metus aliquam pellentesque</a></li>
-                            <li><a href="#">Suspendisse iaculis mauris</a></li>
-                            <li><a href="#">Urnanet non molestie semper</a></li>
-                            <li><a href="#">Metus aliquam pellentesque</a></li>
-                            <li><a href="#">Suspendisse iaculis mauris</a></li>
-                            <li><a href="#">Suspendisse iaculis mauris</a></li>
-                            <li><a href="#">Proin gravida orci porttitor</a></li>
-                        </ul>
-                    </div>
+                    <div style="clear: both;">&nbsp;</div>
                 </div>
-                <div style="clear: both;">&nbsp;</div>
-            </div>
-            <div id="footer">
-                <p>&copy;&nbsp;Copyright 2015. All Rights Reserved | Downs, Jones, Jozefiak, Richards, Turnipseed</p>
-            </div>
+                <div id="footer">
+                    <p>&copy;&nbsp;Copyright 2015. All Rights Reserved | Downs, Jones, Jozefiak, Richards, Turnipseed</p>
+                </div>
         </body>
     </html>
 
