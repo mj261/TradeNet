@@ -36,17 +36,20 @@ $problem = isset($_GET['prob']) ? $_GET['prob'] : NULL;
 <br>
 
 <div class="login">
-    <form method="post" name="login_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" accept-charset="utf-8" style="display: inline-block;">
+    <form method="post" name="login_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+          accept-charset="utf-8" style="display: inline-block;">
 
-        <input type="text" name="username" id="username" value="" maxlength="50" placeholder="username" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="password" name="password" id="password" value="" maxlength="" placeholder="password" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="button" id="Submit" value="Login" onClick="form_hash(this.form, this.form.username, this.form.password);">
+        <input type="text" name="username" id="username" value="" maxlength="50" placeholder="username"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="password" name="password" id="password" value="" maxlength="" placeholder="password"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="button" id="Submit" value="Login"
+               onClick="form_hash(this.form, this.form.username, this.form.password);">
     </form>
     <?php
-    if ($problem === 'Brute'){
+    if ($problem === 'Brute') {
         echo '<h3>Your account has been locked for <br>too many login attempts!</h3>';
-    }
-    elseif ($problem === 'Combo'){
+    } elseif ($problem === 'Combo') {
         echo '<h3>You entered an invalid username <br>and/or password!</h3>';
     }
     ?>

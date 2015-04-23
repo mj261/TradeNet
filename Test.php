@@ -31,7 +31,7 @@ sec_session_start();
     <ul>
         <li><a href="customerhome.php" class="first">Home</a></li>
         <li><a href="viewstocks.php">View Stocks</a></li>
-        <li><a href="trade.php">Trade</a></li>
+        <li><a href="buy.php">Trade</a></li>
         <li><a href="transfer.php">Transfer</a></li>
         <!--                    <li><a href="#">Training</a></li>-->
         <!--                    <li><a href="#">Support</a></li>-->
@@ -56,34 +56,34 @@ sec_session_start();
                         ?>
                         <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
                              style="background-color: #E74C3C;">
-                        <?php
-                        } else {
-                        ?>
-                        <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
-                             style="background-color: #2ECC71;">
-                        <?php
-                        }
-                        ?>
-                            <div id="stock-values-<?php echo $data[0] ?>">
-                                <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
-                                <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
+                            <?php
+                            } else {
+                            ?>
+                            <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                                 style="background-color: #2ECC71;">
+                                <?php
+                                }
+                                ?>
+                                <div id="stock-values-<?php echo $data[0] ?>">
+                                    <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                    <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
 
-                                <div id="stock-delta-<?php echo $data[0] ?>"><?php echo $data[3] ?></div>
-                                <div
-                                    id="stock-perc-<?php echo $data[0] ?>"><?php echo '(' . $data[4] . ')' ?></div>
+                                    <div id="stock-delta-<?php echo $data[0] ?>"><?php echo $data[3] ?></div>
+                                    <div
+                                        id="stock-perc-<?php echo $data[0] ?>"><?php echo '(' . $data[4] . ')' ?></div>
 
-                                <div>&nbsp;</div>
+                                    <div>&nbsp;</div>
 
-                                <div id="stock-price-lt"><strong>Last Trade</strong></div>
-                                <div id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] ?></div>
+                                    <div id="stock-price-lt"><strong>Last Trade</strong></div>
+                                    <div id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] ?></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <?php
-                    }
-                    fclose($handle);
+                        <?php
+                        }
+                        fclose($handle);
 
-                    ?>
+                        ?>
 
                     </div>
                 </div>

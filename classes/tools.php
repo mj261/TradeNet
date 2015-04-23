@@ -123,8 +123,7 @@ function check_brute($user_id, $mysqli)
         } else {
             return false;
         }
-    }
-    else {
+    } else {
         return false;
     }
 }

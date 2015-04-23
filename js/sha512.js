@@ -45,7 +45,7 @@ function any_hmac_sha512(k, d, e) {
 function sha512_vm_test() {
     return hex_sha512("abc").toLowerCase() ==
         "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
-            "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f";
+        "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f";
 }
 
 /*
@@ -87,7 +87,7 @@ function rstr2hex(input) {
     for (var i = 0; i < input.length; i++) {
         x = input.charCodeAt(i);
         output += hex_tab.charAt((x >>> 4) & 0x0F)
-            + hex_tab.charAt(x & 0x0F);
+        + hex_tab.charAt(x & 0x0F);
     }
     return output;
 }
@@ -136,7 +136,7 @@ function rstr2any(input, encoding) {
      * use.
      */
     var full_length = Math.ceil(input.length * 8 /
-        (Math.log(encoding.length) / Math.log(2)));
+    (Math.log(encoding.length) / Math.log(2)));
     var remainders = Array(full_length);
     for (j = 0; j < full_length; j++) {
         quotient = Array();

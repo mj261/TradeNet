@@ -35,13 +35,21 @@ include_once 'inc/adduser.inc.php';
 <br>
 
 <div class="adduser">
-    <form method="post" name="login_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" accept-charset="utf-8" style="display: inline-block;">
+    <form method="post" name="login_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+          accept-charset="utf-8" style="display: inline-block;">
 
-        <input type="text" name="customer_number" id="customer_number" value="" maxlength="5" placeholder="Customer Number" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="text" name="email" id="email" value="" maxlength="50" placeholder="Email" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="text" name="username" id="username" value="" maxlength="50" placeholder="Username" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="password" name="password" id="password" value="" maxlength="" placeholder="Password" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
-        <input type="password" name="confirm_password" id="confirm_password" value="" maxlength="" placeholder="Confirm Password" onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="text" name="customer_number" id="customer_number" value="" maxlength="5"
+               placeholder="Customer Number"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="text" name="email" id="email" value="" maxlength="50" placeholder="Email"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="text" name="username" id="username" value="" maxlength="50" placeholder="Username"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="password" name="password" id="password" value="" maxlength="" placeholder="Password"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+        <input type="password" name="confirm_password" id="confirm_password" value="" maxlength=""
+               placeholder="Confirm Password"
+               onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
         <input type="button" id="Submit" value="Add User" onclick="return reg_form_hash(this.form,
                                        this.form.customer_number,
                                        this.form.username,

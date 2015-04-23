@@ -15,7 +15,7 @@ if (login_check($db) === true) {
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>TradeNet | View Stocks</title>
+        <title>TradeNet | Trade</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -31,9 +31,9 @@ if (login_check($db) === true) {
     <div id="navigation">
         <ul>
             <li><a href="customerhome.php">Home</a></li>
-            <li><a href="viewstocks.php" class="first">View Stocks</a></li>
+            <li><a href="viewstocks.php">View Stocks</a></li>
             <li><a href="buy.php">Buy</a></li>
-            <li><a href="sell.php">Sell</a></li>
+            <li><a href="sell.php" class="first">Sell</a></li>
             <li><a href="transfer.php">Transfer</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>

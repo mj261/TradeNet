@@ -18,6 +18,9 @@ if (login_check($db) === true) {
         <title>TradeNet | Transfer</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/flat-ui.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
     </head>
     <body>
     <div id="header">
@@ -29,10 +32,9 @@ if (login_check($db) === true) {
         <ul>
             <li><a href="customerhome.php">Home</a></li>
             <li><a href="viewstocks.php">View Stocks</a></li>
-            <li><a href="trade.php">Trade</a></li>
+            <li><a href="buy.php">Buy</a></li>
+            <li><a href="sell.php">Sell</a></li>
             <li><a href="transfer.php" class="first">Transfer</a></li>
-            <!--                    <li><a href="#">Training</a></li>-->
-            <!--                    <li><a href="#">Support</a></li>-->
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -67,10 +69,9 @@ if (login_check($db) === true) {
                     <?php
 
                     $world = array('^IXIC', '^GSPC', 'EURUSD=X', 'GCM15.CMX', 'CLM15.NYM');
-                    $url= 'http://finance.yahoo.com/d/quotes.csv?s='.implode('+', $world).'&f='.'snl1c1jkd1t1';
+                    $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . implode('+', $world) . '&f=' . 'snl1c1jkd1t1';
                     $handle = fopen($url, 'r');
-                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE)
-                    {
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                         echo "<li><a href='http://finance.yahoo.com/q?s=$data[0]' target='_blank'>$data[1]  -  $$data[2]</a></li>";
                     }
                     fclose($handle);
