@@ -34,7 +34,7 @@ include_once 'inc/adduser.inc.php';
 </div>
 <br>
 
-<div class="adduser">
+<div class="add-user">
     <form method="post" name="login_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
           accept-charset="utf-8" style="display: inline-block;">
 

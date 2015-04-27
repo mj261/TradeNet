@@ -16,5 +16,3 @@ $db->ssl_set('classes/client-key.pem', 'classes/client-cert.pem', 'classes/ca.pe
 
 $mysqli = mysqli_real_connect($db, HOST, USER, PASSWORD, DATABASE,
     3306, NULL, MYSQLI_CLIENT_SSL);
-
-?>

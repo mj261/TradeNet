@@ -9,7 +9,7 @@ if (isset($_POST['customer_number'], $_POST['username'], $_POST['email'], $_POST
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
     $password = filter_input(INPUT_POST, 'p', FILTER_SANITIZE_STRING);
-    if (strlen($password) != 128) {
+    if (strlen($password) !== 128) {
         // The hashed pwd should be 128 characters long.
         // If it's not, something really odd has happened
         $error_msg .= '<p class="error">Invalid password configuration.</p>';
@@ -36,11 +36,6 @@ if (isset($_POST['customer_number'], $_POST['username'], $_POST['email'], $_POST
         $error_msg .= '<p class="error">Database error</p>';
     }
 
-    // TODO:
-    // We'll also have to account for the situation where the user doesn't have
-    // rights to do registration, by checking what type of user is attempting to
-    // perform the operation.
-
     if (empty($error_msg)) {
         // Create a random salt
         $random_salt = hash('sha512', uniqid(openssl_random_pseudo_bytes(16), TRUE));
@@ -49,7 +44,7 @@ if (isset($_POST['customer_number'], $_POST['username'], $_POST['email'], $_POST
         $password = hash('sha512', $password . $random_salt);
 
         // Insert the new user into the database
-        if ($insert_stmt = $db->prepare("INSERT INTO `Users` (CustomerID, Username, Email, Password, Salt) VALUES (?, ?, ?, ?, ?)")) {
+        if ($insert_stmt = $db->prepare('INSERT INTO `Users` (CustomerID, Username, Email, Password, Salt) VALUES (?, ?, ?, ?, ?)')) {
             $insert_stmt->bind_param('sssss', $customer, $username, $email, $password, $random_salt);
             // Execute the prepared query.
             if (!$insert_stmt->execute()) {

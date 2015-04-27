@@ -65,7 +65,7 @@ function login($user, $password, $db)
                 // Account is locked
                 // Send an email to user saying their account is locked
 
-                $db->query("INSERT INTO LoginAttempts(id, time, Success, IP) VALUES ('$Customer_ID', '$now', 0, '$ip')");
+                $db->query("INSERT INTO LoginAttempts(ID, Time, Success, IP) VALUES ('$Customer_ID', '$now', 0, '$ip')");
                 return false;
             } else {
                 // Check if the password in the database matches
@@ -82,13 +82,13 @@ function login($user, $password, $db)
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512',
                         $password . $user_browser);
-                    $db->query("INSERT INTO LoginAttempts(id, time, Success, IP) VALUES ('$Customer_ID', '$now', 1, '$ip')");
+                    $db->query("INSERT INTO LoginAttempts(ID, Time, Success, IP) VALUES ('$Customer_ID', '$now', 1, '$ip')");
                     // Login successful.
                     return true;
                 } else {
                     // Password is not correct
                     // We record this attempt in the database
-                    $db->query("INSERT INTO LoginAttempts(id, time, Success, IP) VALUES ('$Customer_ID', '$now', 0, '$ip')");
+                    $db->query("INSERT INTO LoginAttempts(ID, Time, Success, IP) VALUES ('$Customer_ID', '$now', 0, '$ip')");
                     return false;
                 }
             }
@@ -109,7 +109,7 @@ function check_brute($user_id, $mysqli)
     // All login attempts are counted from the past 2 hours.
     $valid_attempts = $now - (2 * 60 * 60);
 
-    if ($stmt = $mysqli->prepare("SELECT time FROM LoginAttempts WHERE id = ? AND Success = '0' AND time > '$valid_attempts'")
+    if ($stmt = $mysqli->prepare("SELECT Time FROM LoginAttempts WHERE ID = ? AND Success = '0' AND Time > '$valid_attempts'")
     ) {
         $stmt->bind_param('i', $user_id);
 
@@ -130,6 +130,7 @@ function check_brute($user_id, $mysqli)
 
 function login_check($db)
 {
+    $password = '';
     // Check if all session variables are set
     if (isset($_SESSION['user_id'],
         $_SESSION['username'],
@@ -141,9 +142,7 @@ function login_check($db)
         // Get the user-agent string of the user.
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-        if ($stmt = $db->prepare("SELECT password
-                                      FROM Users
-                                      WHERE CustomerID = ? LIMIT 1")
+        if ($stmt = $db->prepare('SELECT Password FROM Users WHERE CustomerID = ? LIMIT 1')
         ) {
             // Bind "$user_id" to parameter.
             $stmt->bind_param('i', $user_id);
@@ -177,4 +176,3 @@ function login_check($db)
     }
 }
 
-?>

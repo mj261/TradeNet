@@ -141,7 +141,7 @@ body {
     margin-top: 10px;
 }
 
-.adduser {
+.add-user {
     position: absolute;
     top: calc(50% - 150px);
     left: calc(50% - 50px);
@@ -151,7 +151,7 @@ body {
     z-index: 2;
 }
 
-.adduser input[type=text] {
+.add-user input[type=text] {
     width: 250px;
     height: 30px;
     background: transparent;
@@ -165,7 +165,7 @@ body {
     margin-top: 10px;
 }
 
-.adduser input[type=password] {
+.add-user input[type=password] {
     width: 250px;
     height: 30px;
     background: transparent;
@@ -179,7 +179,7 @@ body {
     margin-top: 10px;
 }
 
-.adduser input[type=button] {
+.add-user input[type=button] {
     width: 260px;
     height: 35px;
     background: #fff;
@@ -194,29 +194,29 @@ body {
     margin-top: 10px;
 }
 
-.adduser input[type=button]:hover {
+.add-user input[type=button]:hover {
     opacity: 0.8;
 }
 
-.adduser input[type=button]:active {
+.add-user input[type=button]:active {
     opacity: 0.6;
 }
 
-.adduser input[type=text]:focus {
+.add-user input[type=text]:focus {
     outline: none;
     border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-.adduser input[type=password]:focus {
+.add-user input[type=password]:focus {
     outline: none;
     border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-.adduser input[type=button]:focus {
+.add-user input[type=button]:focus {
     outline: none;
 }
 
-.adduser h3 {
+.add-user h3 {
     color: #fff;
     font-family: 'Exo', sans-serif;
     font-size: 16px;

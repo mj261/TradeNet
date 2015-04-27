@@ -52,7 +52,7 @@ sec_session_start();
                     ?>
                     <div class="span2 row-margin-small">
                         <?php
-                        if (substr($data[4], 0, 1) == '-'){
+                        if (substr($data[4], 0, 1) === '-'){
                         ?>
                         <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
                              style="background-color: #E74C3C;">

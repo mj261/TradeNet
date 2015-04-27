@@ -21,5 +21,3 @@ if (isset($_POST['username'], $_POST['p'])) {
         header('Location: /index.php?prob=Combo');
     }
 }
-
-?>
