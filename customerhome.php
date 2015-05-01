@@ -58,7 +58,7 @@ if (login_check($db) === true) {
                     <div id=stock-tickers class="row" style="width: 90%; margin: 0 auto;">
                         <?php
 
-                        $stocks = $db->prepare('SELECT Stock, Shares, Price FROM Portfolio WHERE Customer = ?');
+                        $stocks = $db->prepare('SELECT Stock, Shares, Price FROM Portfolio WHERE Customer = ? ORDER BY Stock ASC, Shares DESC;');
                         $stocks->bind_param('s', $_SESSION['user_id']);
                         $stocks->execute();
                         $stocks->store_result();

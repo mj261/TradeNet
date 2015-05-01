@@ -9,6 +9,58 @@ sec_session_start();
 
 if (login_check($db) === true) {
 
+    if (isset($_POST['stock'], $_POST['amount'])) {
+        if($_POST['stock'] === ''){
+            $error = 'Please enter a valid stock symbol!';
+        }
+        elseif($_POST['amount'] === '' or (int)$_POST['amount'] === 0){
+            $error = 'Please enter a valid number of stocks!';
+        }
+        else{
+            $price = 0;
+            $Stock_to_Buy = $_POST['stock'];
+            $Amount_of_Stocks = $_POST['amount'];
+            $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . $Stock_to_Buy . '&f=' . 'l1';
+            $handle = fopen($url, 'r');
+            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                $price = $data[0];
+            }
+            fclose($handle);
+
+            if($price >= 0 and $price !== 'N/A'){
+                $stocks = $db->prepare('SELECT Balance FROM Customers WHERE ID = ?');
+                $stocks->bind_param('s', $_SESSION['user_id']);
+                $stocks->execute();
+                $stocks->store_result();
+                $stocks->bind_result($Balance);
+                $stocks->fetch();
+                $stocks->close();
+                if(($Amount_of_Stocks*$price)>$Balance){
+                    $error = 'You do not have enough money in your account!';
+                }
+                else{
+                    $time = time();
+                    $newBalance = $Balance - ($Amount_of_Stocks*$price);
+                    $update = $db->prepare('UPDATE Customers SET Balance = ? WHERE ID = ?');
+                    $update->bind_param('ss', $newBalance, $_SESSION['user_id']);
+                    $update->execute();
+                    $update->close();
+                    $update2 = $db->prepare('INSERT INTO `Transactions`(`Customer`, `Stock`, `Number`, `Time`) VALUES (?,?,?,?)');
+                    $update2->bind_param('ssss', $_SESSION['user_id'], $Stock_to_Buy, $Amount_of_Stocks, $time);
+                    $update2->execute();
+                    $update2->close();
+                    $update3 = $db->prepare('INSERT INTO `Portfolio`(`Customer`, `Stock`, `Shares`, `Price`) VALUES (?,?,?,?)');
+                    $update3->bind_param('ssss', $_SESSION['user_id'], $Stock_to_Buy, $Amount_of_Stocks, $price);
+                    $update3->execute();
+                    $update3->close();
+                    header('Location: /customerhome.php');
+                }
+            }
+            else{
+                $error = 'Please enter a valid stock symbol!';
+            }
+        }
+    }
     ?>
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -41,27 +93,41 @@ if (login_check($db) === true) {
     <div id="content">
         <div id="page">
             <div id="column1">
-                <div class="box1">
-                    <h2>Welcome to TradeNet </h2>
+                <?php
+                    if(isset($error)){
+                        echo '<h2 style="color: red">' . $error . '</h2><br/>';
+                    }
+                ?>
 
-                    <p><strong><img src="css/images/image06.jpg" alt="" width="120" height="120" class="image-left"/>This
-                            template </strong> is a free CSS web template. Thanks goes to <a href="#">Stock Exchange</a>
-                        for the free photo I used in this template. This design uses pure CSS and no tables for layout
-                        and is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/ph/">Creative
-                            Commons Attribution-Share Alike 3.0 Philippines License</a>, which basically says that:</p>
-                    <ul>
-                        <li>You <strong>CAN</strong> use this design for both personal or commercial purposes free of
-                            charge.
-                        </li>
-                        <li>You <strong>CAN</strong> copy, distribute and transmit this template.</li>
-                        <li>You <strong>CAN</strong> modify this template however you want.</li>
-                    </ul>
-                    <p>Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam
-                        erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus,
-                        sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. Donec
-                        placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est.
-                        Curabitur sit amet nulla. Nam in massa. </p>
-                </div>
+                <form method="post" name="buy" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+                      accept-charset="utf-8">
+                    <table border="0" style="border-collapse: collapse; padding: 0; left:10%; width:550px;">
+                        <tbody>
+                        <tr>
+                            <td style="text-align:center;">
+                                <label for="stock" style="float:left;width:170px;">Stock Symbol:</label>
+                                <input type="text" name="stock" id="stock" value="" maxlength="5"
+                                       placeholder="Stock"
+                                       onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+
+                                <div style="clear:left;height:10px;">&nbsp;</div>
+
+                                <label for="amount" style="float:left;width:170px;">Number of Stocks:</label>
+                                <input type="text" name="amount" id="amount" value="" maxlength="5"
+                                       placeholder="Amount"
+                                       onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+
+                                <div style="clear:left;height:20px;">&nbsp;</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <button id="submit" type="submit" value="Submit">Submit</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
             <div id="column2">
                 <h2>World Markets</h2>

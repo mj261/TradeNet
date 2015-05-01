@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
-  <data-source name="MySQL - TradeNet@52.4.116.111" uuid="e5ed338f-c382-4ee0-9479-4092fda87402">
+  <data-source name="MySQL - TradeNet@52.4.116.111" uuid="98c09d4c-c400-4a68-9a38-3230d2b1e1c5">
     <database-info product="MySQL" version="5.5.42" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
@@ -24,11 +24,12 @@
       <primary-key name="PRIMARY" columns="Attempt_Number"/>
     </table>
     <table name="Portfolio" schema="" catalog="TradeNet" type="TABLE">
+      <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="Customer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" remarks="Q3VzdG9tZXIgTnVtYmVy"/>
       <column name="Stock" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" remarks="U3RvY2sgU3ltYm9s"/>
       <column name="Shares" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12" remarks="TnVtYmVyIG9mIFNoYXJlcw=="/>
       <column name="Price" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12" remarks="UHJpY2UgcGVyIFNoYXJl"/>
-      <primary-key name="PRIMARY" columns="Customer"/>
+      <primary-key name="PRIMARY" columns="ID"/>
     </table>
     <table name="Transactions" schema="" catalog="TradeNet" type="TABLE">
       <column name="ID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" remarks="VHJhbnMgTnVtYmVy" autoIncrement="true"/>
