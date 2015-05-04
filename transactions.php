@@ -15,7 +15,7 @@ if (login_check($db) === true) {
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>TradeNet | Transfer</title>
+        <title>TradeNet | Transactions</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
         <link href="css/bootstrap.css" rel="stylesheet">
@@ -34,7 +34,7 @@ if (login_check($db) === true) {
             <li><a href="viewstocks.php">View Stocks</a></li>
             <li><a href="buy.php">Buy</a></li>
             <li><a href="sell.php">Sell</a></li>
-            <li><a href="transfer.php" class="first">Transfer</a></li>
+            <li><a href="transactions.php" class="first">Transactions</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -42,25 +42,25 @@ if (login_check($db) === true) {
         <div id="page">
             <div id="column1">
                 <div class="box1">
-                    <h2>Welcome to TradeNet </h2>
+                    <h2 style="text-align: center;">Transactions</h2>
 
-                    <p><strong><img src="css/images/image06.jpg" alt="" width="120" height="120" class="image-left"/>This
-                            template </strong> is a free CSS web template. Thanks goes to <a href="#">Stock Exchange</a>
-                        for the free photo I used in this template. This design uses pure CSS and no tables for layout
-                        and is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/ph/">Creative
-                            Commons Attribution-Share Alike 3.0 Philippines License</a>, which basically says that:</p>
-                    <ul>
-                        <li>You <strong>CAN</strong> use this design for both personal or commercial purposes free of
-                            charge.
-                        </li>
-                        <li>You <strong>CAN</strong> copy, distribute and transmit this template.</li>
-                        <li>You <strong>CAN</strong> modify this template however you want.</li>
-                    </ul>
-                    <p>Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam
-                        erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus,
-                        sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. Donec
-                        placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est.
-                        Curabitur sit amet nulla. Nam in massa. </p>
+                    <?php
+                    $Customer_Balance = $db->prepare('SELECT Stock, Number, Time FROM Transactions WHERE Customer = ?');
+                    $Customer_Balance->bind_param('s', $_SESSION['user_id']);
+                    $Customer_Balance->execute();
+                    $Customer_Balance->store_result();
+                    $Customer_Balance->bind_result($Stock, $Number, $Time);
+                    while($Customer_Balance->fetch()){
+                        if($Number[0] === '-'){
+                            $Number = ltrim ($Number, '-');
+                            echo '<h4>' . date('m/d/Y H:i:s', $Time) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . ' Sold ' . $Number . ' Shares of ' . $Stock . '</h4>';
+                        }
+                        else{
+                            echo '<h4>' . date('m/d/Y H:i:s', $Time) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . ' Bought ' . $Number . ' Shares of ' . $Stock . '</h4>';
+                        }
+                    }
+                    $Customer_Balance->close();
+                    ?>
                 </div>
             </div>
             <div id="column2">

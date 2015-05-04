@@ -32,7 +32,7 @@ sec_session_start();
         <li><a href="customerhome.php" class="first">Home</a></li>
         <li><a href="viewstocks.php">View Stocks</a></li>
         <li><a href="buy.php">Trade</a></li>
-        <li><a href="transfer.php">Transfer</a></li>
+        <li><a href="transactions.php">Transfer</a></li>
         <!--                    <li><a href="#">Training</a></li>-->
         <!--                    <li><a href="#">Support</a></li>-->
         <li><a href="logout.php">Logout</a></li>

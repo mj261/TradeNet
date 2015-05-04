@@ -86,7 +86,7 @@ if (login_check($db) === true) {
             <li><a href="viewstocks.php">View Stocks</a></li>
             <li><a href="buy.php" class="first">Buy</a></li>
             <li><a href="sell.php">Sell</a></li>
-            <li><a href="transfer.php">Transfer</a></li>
+            <li><a href="transactions.php">Transactions</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>

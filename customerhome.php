@@ -36,7 +36,7 @@ if (login_check($db) === true) {
             <li><a href="viewstocks.php">View Stocks</a></li>
             <li><a href="buy.php">Buy</a></li>
             <li><a href="sell.php">Sell</a></li>
-            <li><a href="transfer.php">Transfer</a></li>
+            <li><a href="transactions.php">Transactions</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -64,7 +64,7 @@ if (login_check($db) === true) {
                         $stocks->store_result();
                         $stocks->bind_result($Symbol, $Shares, $Price);
                         while ($stocks->fetch()) {
-                            $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . $Symbol . '&f=' . 'snl1c1p2d1t1v';
+                            $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . $Symbol . '&f=' . 'snl1c1p2d1t1vnxpa2kj';
                             $handle = fopen($url, 'r');
                             while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
                                 ?>
@@ -84,7 +84,21 @@ if (login_check($db) === true) {
                                                 }
                                                 ?>
                                                 <div id="stock-values-<?php echo $data[0] ?>">
-                                                    <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                                    <h2 id="stock-symbol-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                                    <h6 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[8] ?></h6>
+
+                                                    <div id="stock-shares"><strong>Shares</strong></div>
+                                                    <div
+                                                        id="stock-shares-<?php echo $data[0] ?>"><?php echo $Shares ?></div>
+
+                                                    <div>&nbsp;</div>
+
+                                                    <div id="stock-exchange"><strong>Exchange</strong></div>
+                                                    <div
+                                                        id="stock-exchange-<?php echo $data[0] ?>"><?php echo $data[9] ?></div>
+
+                                                    <div>&nbsp;</div>
+
                                                     <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
 
                                                     <div
@@ -94,15 +108,48 @@ if (login_check($db) === true) {
 
                                                     <div>&nbsp;</div>
 
+                                                    <div id="stock-volume"><strong>Volume</strong></div>
+                                                    <div
+                                                        id="stock-volume-<?php echo $data[0] ?>"><?php echo $data[7] ?></div>
+
+                                                    <div id="stock-volume-avg"><strong>Avg. Volume</strong></div>
+                                                    <div
+                                                        id="stock-volume-avg-<?php echo $data[0] ?>"><?php echo $data[11] ?></div>
+
+                                                    <div>&nbsp;</div>
+
                                                     <div id="stock-price-lt"><strong>Last Trade</strong></div>
                                                     <div
                                                         id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] . ' EST' ?></div>
 
                                                     <div>&nbsp;</div>
 
+                                                    <div id="stock-price-lc"><strong>Last Close</strong></div>
+                                                    <div
+                                                        id="stock-time-<?php echo $data[0] ?>"><?php echo '$' . $data[10] ?></div>
+
+                                                    <div>&nbsp;</div>
+
+                                                    <div id="stock-52-High"><strong>52 Week High</strong></div>
+                                                    <div
+                                                        id="stock-52-High-<?php echo $data[0] ?>"><?php echo "$" . $data[12] ?></div>
+
+                                                    <div id="stock-52-Low"><strong>52 Week Low</strong></div>
+                                                    <div
+                                                        id="stock-52-Low-<?php echo $data[0] ?>"><?php echo "$". $data[13] ?></div>
+
+                                                    <div>&nbsp;</div>
+
                                                     <div id="stock-buy"><strong>Profit and Loss</strong></div>
                                                     <div
                                                         id="stock-PL-<?php echo $data[0] ?>"><?php echo money_format('%.2n', (($Shares * $data[2]) - ($Shares * $Price))) ?></div>
+
+                                                    <div>&nbsp;</div>
+
+                                                    <div id="stock-value"><strong>Value</strong></div>
+                                                    <div
+                                                        id="stock-value-<?php echo $data[0] ?>"><?php echo '$' . $Shares*$data[2] ?></div>
+
                                                 </div>
                                             </div>
                                         </div>
