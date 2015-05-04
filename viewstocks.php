@@ -9,6 +9,7 @@ sec_session_start();
 
 if (login_check($db) === true) {
 
+
     ?>
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -41,27 +42,80 @@ if (login_check($db) === true) {
     <div id="content">
         <div id="page">
             <div id="column1">
-                <div class="box1">
-                    <h2>Welcome to TradeNet </h2>
+                <?php
+                if(isset($error)){
+                    echo '<h2 style="color: red">' . $error . '</h2><br/>';
+                }
+                ?>
 
-                    <p><strong><img src="css/images/image06.jpg" alt="" width="120" height="120" class="image-left"/>This
-                            template </strong> is a free CSS web template. Thanks goes to <a href="#">Stock Exchange</a>
-                        for the free photo I used in this template. This design uses pure CSS and no tables for layout
-                        and is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/ph/">Creative
-                            Commons Attribution-Share Alike 3.0 Philippines License</a>, which basically says that:</p>
-                    <ul>
-                        <li>You <strong>CAN</strong> use this design for both personal or commercial purposes free of
-                            charge.
-                        </li>
-                        <li>You <strong>CAN</strong> copy, distribute and transmit this template.</li>
-                        <li>You <strong>CAN</strong> modify this template however you want.</li>
-                    </ul>
-                    <p>Quisque semper augue mattis wisi. Maecenas ligula. Pellentesque viverra vulputate enim. Aliquam
-                        erat volutpat. Pellentesque tristique ante ut risus. Quisque dictum. Integer nisl risus,
-                        sagittis convallis, rutrum id, elementum congue, nibh. Suspendisse dictum porta lectus. Donec
-                        placerat odio vel elit. Nullam ante orci, pellentesque eget, tempus quis, ultrices in, est.
-                        Curabitur sit amet nulla. Nam in massa. </p>
-                </div>
+                <?php
+
+                if (isset($_POST['stock'])) {
+                    $url = 'http://finance.yahoo.com/d/quotes.csv?s=' . $_POST['stock'] . '&f=' . 'snl1c1p2d1t1v';
+                    $handle = fopen($url, 'r');
+                    while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                        ?>
+                        <a href='http://finance.yahoo.com/q?s=<?php echo $data[0] ?>' target='_blank'>
+                            <div class="span2 row-margin-small" style="margin-left: 200px">
+                                <?php
+                                if (substr($data[4], 0, 1) === '-'){
+                                ?>
+                                <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                                     style="background-color: #E74C3C;">
+                                    <?php
+                                    } else {
+                                    ?>
+                                    <div id="stock-id-{<?php echo $data[0] ?>}" class="tile animate"
+                                         style="background-color: #2ECC71;">
+                                        <?php
+                                        }
+                                        ?>
+                                        <div id="stock-values-<?php echo $data[0] ?>">
+                                            <h2 id="stock-name-<?php echo $data[0] ?>"><?php echo $data[0] ?></h2>
+                                            <h4 id="stock-price-<?php echo $data[0] ?>"><?php echo '$' . $data[2] ?></h4>
+
+                                            <div
+                                                id="stock-delta-<?php echo $data[0] ?>"><?php echo $data[3] ?></div>
+                                            <div
+                                                id="stock-perc-<?php echo $data[0] ?>"><?php echo '(' . $data[4] . ')' ?></div>
+
+                                            <div>&nbsp;</div>
+
+                                            <div id="stock-price-lt"><strong>Last Trade</strong></div>
+                                            <div
+                                                id="stock-time-<?php echo $data[0] ?>"><?php echo $data[6] . ' EST' ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </a>
+                    <?php
+                    }
+                    fclose($handle);
+                }
+                ?>
+
+                <form method="post" name="sell" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>"
+                      accept-charset="utf-8">
+                    <table border="0" style="border-collapse: collapse; padding: 0; left:10%; width:550px;">
+                        <tbody>
+                        <tr>
+                            <td style="text-align:center;">
+                                <label for="stock" style="float:left;width:170px;">Stock Symbol:</label>
+                                <input type="text" name="stock" id="stock" value="" maxlength="5"
+                                       placeholder="Stock"
+                                       onkeydown="if (event.keyCode == 13) document.getElementById('Submit').click()"/>
+
+                                <div style="clear:left;height:10px;">&nbsp;</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <button id="submit" type="submit" value="Submit">Submit</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
             <div id="column2">
                 <h2>World Markets</h2>

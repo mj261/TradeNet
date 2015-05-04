@@ -67,7 +67,7 @@ if (login_check($db) === true) {
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>TradeNet | Trade</title>
+        <title>TradeNet | Buy</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <link href="css/layout.css" rel="stylesheet" type="text/css" media="screen"/>
         <link href="css/bootstrap.css" rel="stylesheet">
