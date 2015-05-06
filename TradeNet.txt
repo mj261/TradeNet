@@ -9,10 +9,10 @@
 |Name|varchar(50)|No|
 |Address|varchar(100)|No|
 |Balance|varchar(100)|No|
-|Profit_And_Loss|varchar(100)|No|
 == Dumping data for table Customers
 
-|12345|Robin Williams|123 Main Street, Anywhere, CA 12345|1000.00|0
+|12345|Robin Williams|123 Main Street, Anywhere, CA 12345|628.5625
+|54321|Byron Williams|Mississippi State, MS 39762|10000.00
 == Table structure for table LoginAttempts
 
 |------
@@ -54,17 +54,36 @@
 |31|12345|1429720673|1|::1
 |32|12345|1429720764|1|::1
 |33|12345|1429722261|1|127.0.0.1
+|34|12345|1429763328|0|127.0.0.1
+|35|12345|1429763334|1|127.0.0.1
+|36|12345|1429770318|1|24.53.165.23
+|37|12345|1429811612|1|::1
+|38|12345|1429816556|1|::1
+|39|12345|1430154293|1|::1
+|40|12345|1430326148|1|::1
+|41|12345|1430627268|1|166.173.251.20
+|42|12345|1430749613|1|::1
+|43|12345|1430757074|1|::1
+|44|12345|1430757576|1|::1
+|45|12345|1430757598|1|::1
+|46|12345|1430758942|1|24.53.165.23
+|47|12345|1430759105|1|24.53.165.23
+|48|54321|1430866637|1|24.53.165.23
 == Table structure for table Portfolio
 
 |------
 |Column|Type|Null|Default
 |------
-|//**Customer**//|int(10)|No|
+|//**ID**//|int(100)|No|
+|Customer|int(10)|No|
 |Stock|varchar(10)|No|
 |Shares|varchar(100)|No|
 |Price|varchar(10)|No|
 == Dumping data for table Portfolio
 
+|5|12345|RNST|1|30.43
+|3|12345|Coke|2|111.46
+|4|12345|BXS|5|24.62
 == Table structure for table Transactions
 
 |------
@@ -77,6 +96,10 @@
 |Time|int(20)|No|
 == Dumping data for table Transactions
 
+|1|12345|Coke|7|1430344726
+|2|12345|BXS|5|1430344788
+|3|12345|RNST|1|1430345209
+|4|12345|Coke|-5|1430750603
 == Table structure for table Users
 
 |------
@@ -90,3 +113,4 @@
 == Dumping data for table Users
 
 |12345|RWilliams|dd42ce0aecdfa0e700d4209b8fa2e0b7ea38efb24dac2010f44ea56f2879752546acc871b4bd4d318fa0d1797c4696e66fae4deb9291cda0c19b8c5d65f24db5|bb493a4ca9db0bcc11d7e237c53a450169f4b5a6492e534c78faa73a5f53f7805e7e1ce1fc4894917a4123755d9f6cd4af59ce7e5808b49859fe0703588ac2f6|test@test.com
+|54321|BWilliams|800272ca6f8b27649512ac7192ae5ac69af9443e6f99aa57c42e0f0a623d9c688e8f3d689d66611f407447bde63a6987a92d27d5fb31797b84f62bf96e6e00fa|d39b50a636c5ccd8b6cfe23160665a608a10f9a061069e426e6e878fa0acd5b48b7695fce1a99ecbcc35fbb510a0105d6fd2a20717b303acab8d7d088450f68b|williams@cse.msstate.edu
